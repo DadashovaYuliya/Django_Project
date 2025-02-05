@@ -1,0 +1,44 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+        "name": "Одежда",
+        "description": "Женская одежда для любого возраста"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+        "name": "Посуда",
+        "description": "Посуда для приготовления, столовые приборы"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "name": "Джинсы",
+        "description": "Детские джинсы синего цвета для девочек",
+        "image": "",
+        "category": 1,
+        "price": 1250,
+        "created_at": "2025-02-01",
+        "updated_at": "2025-02-01"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+        "name": "Сковорода",
+        "description": "Сковорода с антипригарным покрытием",
+        "image": "",
+        "category": 2,
+        "price": 3500,
+        "created_at": "2025-02-01",
+        "updated_at": "2025-02-01"
+    }
+}
+]
