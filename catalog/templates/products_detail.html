@@ -1,0 +1,21 @@
+{% extends 'home.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+            <div class="card shadow-sm">
+                <img src="{{ product.image | media_filter }}" class="card-img-top" alt="Нет изображения">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">Описание: {{ product.description | truncatechars:100 }}</p>
+                    <p class="card-text">Цена (шт): {{ product.price }} руб.</p>
+                    <p class="card-text">Дата создания: {{ product.created_at }}</p>
+                    <p class="card-text">Дата последнего изменения: {{ product.updated_at }}</p>
+                    <a href="{% url 'catalog:products_list' %}" class="btn btn-primary">Назад</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
