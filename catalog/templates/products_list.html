@@ -1,0 +1,25 @@
+{% extends 'home.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Ягодка</h1>
+    <p class="lead">Ягодка - это интернет-магазин. Здесь Вы найдете всё, что Вам нужно.</p>
+</div>
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for product in products %}
+        <div class="col">
+            <div class="card shadow-sm">
+                <img src="{{ product.image | media_filter }}" class="card-img-top" alt="Нет изображения">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description | truncatechars:100 }}</p>
+                    <a href="{% url 'catalog:products_detail' product.pk %}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
