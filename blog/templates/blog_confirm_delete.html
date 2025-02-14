@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-lg-3 col-md-6 col-sm-12 mx-auto text-center">
+  <div class="card mb-4 box-shadow">
+    <div class="card-header">
+      <h4 class="my-0 font-weight-normal">Удалить статью</h4>
+        <p>Вы уверены, что хотите удалить статью "{{ object.name }}"?</p>
+    </div>
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger mb-3">Удалить статью</button>
+      </form>
+      <a href="{% url 'blog:blog_list' %}" class="btn btn-secondary mb-3">Назад</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -31,7 +31,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-class ProductForm(forms.ModelForm):
-    class Meta:
-        model = Product
-        fields = ['name', 'description', 'category', 'price', 'image']
+# class ProductForm(forms.ModelForm):
+#     class Meta:
+#         model = Product
+#         fields = ['name', 'description', 'category', 'price', 'image']
