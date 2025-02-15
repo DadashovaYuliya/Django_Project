@@ -6,7 +6,7 @@ class Blog(models.Model):
     image = models.ImageField(upload_to='blog/image', verbose_name='Превью', blank=True, null=True)
     created_at = models.DateField(auto_now_add=True, verbose_name='Дата создания')
     is_publication = models.BooleanField(verbose_name='Признак публикации')
-    counter = models.PositiveIntegerField(default=0, verbose_name='Количество просмотров', blank=True, null=True)
+    counter = models.PositiveIntegerField(default=0, verbose_name='Количество просмотров')
 
     class Meta:
         verbose_name = 'Блог'
