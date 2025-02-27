@@ -1,5 +1,4 @@
 from django.db import models
-from django import forms
 
 
 class Category(models.Model):
@@ -30,8 +29,3 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
-class ProductForm(forms.ModelForm):
-    class Meta:
-        model = Product
-        fields = ['name', 'description', 'category', 'price', 'image']

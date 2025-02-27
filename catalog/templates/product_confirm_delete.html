@@ -3,13 +3,13 @@
 <div class="col-lg-3 col-md-6 col-sm-12 mx-auto text-center">
   <div class="card mb-4 box-shadow">
     <div class="card-header">
-      <h4 class="my-0 font-weight-normal">Добавить новый товар</h4>
+      <h4 class="my-0 font-weight-normal">Удалить товар</h4>
+        <p>Вы уверены, что хотите удалить "{{ product.name }}"?</p>
     </div>
     <div class="card-body">
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary mb-3">Сохранить</button>
+        <button type="submit" class="btn btn-danger mb-3">Удалить товар</button>
       </form>
       <a href="{% url 'catalog:products_list' %}" class="btn btn-secondary mb-3">Назад</a>
     </div>
