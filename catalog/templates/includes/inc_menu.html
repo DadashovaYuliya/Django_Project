@@ -3,7 +3,31 @@
     <nav class="ms-5">
         <a class="p-2 btn btn-outline-primary" href="/products/">Каталог</a>
         <a class="p-2 btn btn-outline-primary" href="/contacts/">Контакты</a>
+        {% if user.is_authenticated %}
         <a class="p-2 btn btn-outline-primary" href="/products/new/">Добавить товар</a>
+        {% endif %}
         <a class="p-2 btn btn-outline-primary" href="/blog/">Блог</a>
     </nav>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Авторизация
+        </button>
+        <ul class="dropdown-menu">
+            {% if user.is_authenticated %}
+            <li>
+                <form method="post" action="{% url 'users:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" >Выход</button>
+                </form>
+            <li>
+            {% else %}
+                <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
+            </li>
+            <li>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'users:login' %}">Вход</a>
+            </li>
+            {% endif %}
+            </li>
+        </ul>
+    </div>
 </div>
