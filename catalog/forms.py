@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.forms import ModelForm, BooleanField
 
 from catalog.models import Product
-from config.settings import forbidden_words
+from django.conf import settings
 
 
 class StyleFormMixin:
@@ -28,14 +28,14 @@ class ProductForm(StyleFormMixin, ModelForm):
 
     def clean_name(self):
         name = self.cleaned_data['name']
-        for word in forbidden_words:
+        for word in settings.FORBIDDEN_WORDS:
             if word in name.lower():
                 raise ValidationError('Наименование товара содержит запрещенные слова.')
         return name
 
     def clean_description(self):
         description = self.cleaned_data['description']
-        for word in forbidden_words:
+        for word in settings.FORBIDDEN_WORDS:
             if word in description.lower():
                 raise ValidationError('Наименование товара содержит запрещенные слова.')
         return description
