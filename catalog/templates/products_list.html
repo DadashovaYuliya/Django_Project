@@ -16,8 +16,10 @@
                     <h5 class="card-title">{{ product.name }}</h5>
                     <p class="card-text">{{ product.description | truncatechars:100 }}</p>
                     <a href="{% url 'catalog:products_detail' product.pk %}" class="btn btn-primary">Подробнее</a>
-                    {% if user.is_authenticated %}
+                    {% if user.is_authenticated and user == product.owner %}
                     <a href="{% url 'catalog:products_edit' product.pk %}" class="btn btn-sm btn-secondary ml-3">Редактировать</a>
+                    {% endif %}
+                    {% if user.is_authenticated and user == product.owner or perms.catalog.can_unpublish_product%}
                     <a href="{% url 'catalog:products_delete' product.pk %}" class="btn btn-sm btn-danger ml-1">Удалить</a>
                     {% endif %}
                 </div>
