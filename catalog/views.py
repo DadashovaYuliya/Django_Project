@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView, TemplateView
 
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, ProductsModeratorForm
 from catalog.models import Product
 
 
@@ -55,22 +55,21 @@ class ProductsUpdateView(LoginRequiredMixin,UpdateView):
     template_name = 'add_product.html'
     success_url = reverse_lazy('catalog:products_list')
 
-    def form_valid(self, form):
+    def get_form_class(self):
         user = self.request.user
         if user == self.object.owner:
-            return super().form_valid(form)
+            return ProductForm
+        if user.has_perm("catalog.can_unpublish_product"):
+            return ProductsModeratorForm
         raise PermissionDenied ("У вас нет прав для редактирования этого продукта.")
 
 
-class ProductsDeleteView(LoginRequiredMixin, DeleteView):
+class ProductsDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
     template_name = 'product_confirm_delete.html'
     success_url = reverse_lazy('catalog:products_list')
 
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
+    def test_func(self):
+        product = self.get_object()
         user = self.request.user
-        if user == self.object.owner or user.has_perm('catalog.can_unpublish_product'):
-            self.object.delete()
-            return super().delete(request, *args, **kwargs)
-        raise PermissionDenied("У вас нет прав для удаления этого товара.")
+        return user.has_perm("catalog.delete_product") or user == product.owner
