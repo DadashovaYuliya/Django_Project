@@ -39,3 +39,8 @@ class ProductForm(StyleFormMixin, ModelForm):
             if word in description.lower():
                 raise ValidationError('Наименование товара содержит запрещенные слова.')
         return description
+
+class ProductsModeratorForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Product
+        fields = ['is_published', ]
