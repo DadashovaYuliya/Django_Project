@@ -1,13 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView, TemplateView
 
 from catalog.forms import ProductForm, ProductsModeratorForm
-from catalog.models import Product
+from catalog.models import Product, Category
+from catalog.services import get_products_from_cache, get_products_by_category
 
 
 class ContactsTemplateView(TemplateView):
@@ -28,6 +29,28 @@ class ProductsListView(ListView):
     template_name = 'products_list.html'
     context_object_name = 'products'
 
+    def get_queryset(self):
+        return get_products_from_cache()
+
+
+class ProductsCategoryListView(ListView):
+    model = Product
+    template_name = 'products_category_list.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        category_id = self.kwargs.get('category_id')
+        return get_products_by_category(category_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_id = self.kwargs.get('category_id')
+
+        if category_id:
+            category = get_object_or_404(Category, id=category_id)
+            context['category'] = category
+
+        return context
 
 class ProductsDetailView(LoginRequiredMixin, DetailView):
     model = Product
